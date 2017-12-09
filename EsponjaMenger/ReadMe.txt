@@ -2,6 +2,8 @@
     APLICACIÓN DE CONSOLA: EsponjaMenger Información general del proyecto
 ========================================================================
 
+https://www.youtube.com/watch?v=LG8ZK-rRkXo
+
 AppWizard ha creado esta aplicación EsponjaMenger.
 
 Este archivo contiene un resumen de lo que encontrará en cada uno de los archivos que constituyen la aplicación EsponjaMenger.
