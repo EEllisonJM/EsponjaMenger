@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,13 +7,13 @@
 #include <math.h>
 #define M_PI 3.14159265358979323846
 using namespace std;
-
+/*Punto inicial*/
 double x_i = -1.5;
 double y_i = -1.5;
 double z_i = -1.5;
-
+/*Tamanio*/
 double tamanioCubo = 3.5;
-int iteracion = 0;
+int n = 0;
 
 bool clickMouseIzq = false;
 
@@ -22,16 +22,14 @@ float eje_Y = 0.0f;
 
 float aux_x = 0.0f;
 float aux_y = 0.0f;
-
+/*Texturas*/
 GLuint _text1;
 GLuint _text2;
 GLuint _text3;
 GLuint _text4;
 GLuint _text5;
 GLuint _text6;
-
-
-
+/*Método para cargar texturas [imagen]*/
 GLuint loadTexture(Image* image) {
 	GLuint idtextura;
 	glGenTextures(1, &idtextura);
@@ -39,8 +37,6 @@ GLuint loadTexture(Image* image) {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 	return idtextura;
 }
-
-
 void initRendering() {
 	Image* lado1 = loadBMP("1.bmp");
 	_text1 = loadTexture(lado1);
@@ -66,47 +62,43 @@ void initRendering() {
 	_text6 = loadTexture(lado6);
 	delete lado6;
 }
-
+/*Método para cargar texturas [textura] */
 void cargarTextura(GLuint _textura) {
-
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _textura);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
-
+/*Graficar Un cubo*/
 void graficarCubo(double x, double y, double z, double tamanio) {
-
+	/*Parte de abajo con [Textura 1]*/
 	cargarTextura(_text1);
 	glBegin(GL_POLYGON);
-	//glColor3f(0.0, 1.0, 1.0);
 	glTexCoord2f(0.0, 1.0);
-	glVertex3f(x, y, z);
+	glVertex3f(x, y, z);//Punto inicial
 	glTexCoord2f(0.0, 0.0);
-	glVertex3f(x + tamanio, y, z);
+	glVertex3f(x + tamanio, y, z);//Punto 2
 	glTexCoord2f(1.0, 0.0);
-	glVertex3f(x + tamanio, y + tamanio, z);
+	glVertex3f(x + tamanio, y + tamanio, z);//Punto 3
 	glTexCoord2f(1.0, 1.0);
-	glVertex3f(x, y + tamanio, z);
+	glVertex3f(x, y + tamanio, z);//Punto 4
 	glEnd();
-
+	/*Parte lateral Izq [Textura 2]*/
 	cargarTextura(_text2);
 	glBegin(GL_POLYGON);
-	//glColor3f(1.0, 1.0, 0.0);
 	glTexCoord2f(0.0, 1.0);
-	glVertex3f(x + tamanio, y, z);
+	glVertex3f(x + tamanio, y, z);//Punto 1
 	glTexCoord2f(0.0, 0.0);
-	glVertex3f(x + tamanio, y, z + tamanio);
+	glVertex3f(x + tamanio, y, z + tamanio);//Punto 2
 	glTexCoord2f(1.0, 0.0);
 	glVertex3f(x + tamanio, y + tamanio, z + tamanio);
 	glTexCoord2f(1.0, 1.0);
 	glVertex3f(x + tamanio, y + tamanio, z);
 	glEnd();
 
-
+	/*Arriba [Textura 3]*/
 	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-	//glColor3f(0.5, 0.5, 0.8);
 	glTexCoord2f(0.0, 1.0);
 	glVertex3f(x + tamanio, y, z + tamanio);
 	glTexCoord2f(0.0, 0.0);
@@ -116,11 +108,9 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 	glTexCoord2f(1.0, 1.0);
 	glVertex3f(x + tamanio, y + tamanio, z + tamanio);
 	glEnd();
-
-
+	/*Parte lateral Derecha [Textura 4]*/
 	cargarTextura(_text4);
 	glBegin(GL_POLYGON);
-	//glColor3f(0.0, 1.0, 0.0);
 	glTexCoord2f(0.0, 1.0);
 	glVertex3f(x, y, z + tamanio);
 	glTexCoord2f(0.0, 0.0);
@@ -130,11 +120,9 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 	glTexCoord2f(1.0, 1.0);
 	glVertex3f(x, y + tamanio, z + tamanio);
 	glEnd();
-
-
+	/*Enfrente Textura 5*/
 	cargarTextura(_text5);
 	glBegin(GL_POLYGON);
-	//glColor3f(0.0, 0.0, 1.0);
 	glTexCoord2f(0.0, 1.0);
 	glVertex3f(x, y + tamanio, z);
 	glTexCoord2f(0.0, 0.0);
@@ -144,12 +132,10 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 	glTexCoord2f(1.0, 1.0);
 	glVertex3f(x, y + tamanio, z + tamanio);
 	glEnd();
-
-
+	/*Atras [Textura 6]*/
 	cargarTextura(_text6);
 	glBegin(GL_POLYGON);
 	glTexCoord2f(0.0, 1.0);
-	//glColor3f(1.0, 0.0, 0.0);
 	glVertex3f(x, y, z + tamanio);
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(x + tamanio, y, z + tamanio);
@@ -161,9 +147,9 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 }
 
 /* Funcion recursiva*/
-void graficarCuboRecursivo(double x, double y, double z, double tamanio, int iteracion) {
-	if (iteracion == 0) {//Caso base
-		graficarCubo(x, y, z, tamanio);
+void graficarCuboRecursivo(double x, double y, double z, double tamanio, int n) {
+	if (n == 0) {//Caso base
+		graficarCubo(x, y, z, tamanio);//Graficar un cubo
 	}
 	else {
 		tamanio = tamanio / 3;
@@ -171,11 +157,19 @@ void graficarCuboRecursivo(double x, double y, double z, double tamanio, int ite
 			for (int j = 0; j<3; j++) {
 				for (int k = 0; k<3; k++) {
 					/*Agujeros*/
-					if (i == 1 && j == 1 || i == 1 && k == 1 || j == 1 && k == 1 || i == 1 && j == 1 && k == 1) {
+					if (i == 1 && j == 1 ||
+						i == 1 && k == 1 ||
+						j == 1 && k == 1 ||
+						i == 1 && j == 1 && k == 1) {
 						continue;//Omitir Agujeros y continuar
 					}
-					else {
-						graficarCuboRecursivo(x + i*tamanio, y + j*tamanio, z + k*tamanio, tamanio, iteracion - 1); // Graficar cubo
+					else {// Graficar cubos
+						graficarCuboRecursivo(
+						x + i*tamanio,
+						y + j*tamanio,
+						z + k*tamanio,
+						tamanio,
+						n - 1);
 					}
 				}
 			}
@@ -191,17 +185,14 @@ void init() {
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	//glMatrixMode(GL_MODELVIEW);
-	//glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-
 
 	gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	glPushMatrix();
-
+	/*Rotar eje X & Y*/
 	glRotatef(eje_X, 1.0f, 0.0f, 0.0f);
 	glRotatef(eje_Y, 0.0f, 1.0f, 0.0f);
 
-	graficarCuboRecursivo(x_i, y_i, z_i, tamanioCubo, iteracion);
+	graficarCuboRecursivo(x_i, y_i, z_i, tamanioCubo, n);
 
 	glPopMatrix();
 	glFlush();
@@ -220,12 +211,12 @@ void ArrowKey(int key, int x, int y) {
 	switch (key)
 	{
 	case GLUT_KEY_UP:
-		iteracion += 1;
+		n += 1;
 		break;
 	case GLUT_KEY_DOWN://Abajo
-		if (iteracion - 1 > -1)
+		if (n - 1 > -1)
 		{
-			iteracion -= 1;
+			n -= 1;
 		}
 		break;
 	}
