@@ -1,12 +1,7 @@
 #include "stdafx.h"
 #include <GL/glut.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
 #include "ImageLoader.h"
-#include <math.h>
-#define M_PI 3.14159265358979323846
-using namespace std;
+
 /*Punto inicial*/
 double x_i = -1.5;
 double y_i = -1.5;
@@ -69,7 +64,7 @@ void cargarTextura(GLuint _textura) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
-/*Graficar Un cubo*/
+/*Graficar cubo*/
 void graficarCubo(double x, double y, double z, double tamanio) {
 	/*Parte de abajo con [Textura 1]*/
 	cargarTextura(_text1);
