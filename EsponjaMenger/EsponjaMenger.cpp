@@ -188,7 +188,7 @@ void display() {
 
 	gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	glPushMatrix();
-	/*Rotar eje X & Y*/
+	/*Rotar eje X & Y*/	
 	glRotatef(eje_X, 1.0f, 0.0f, 0.0f);
 	glRotatef(eje_Y, 0.0f, 1.0f, 0.0f);
 
@@ -215,9 +215,7 @@ void ArrowKey(int key, int x, int y) {
 		break;
 	case GLUT_KEY_DOWN://Abajo
 		if (n - 1 > -1)
-		{
 			n -= 1;
-		}
 		break;
 	}
 }
