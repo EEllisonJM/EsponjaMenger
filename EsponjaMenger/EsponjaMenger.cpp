@@ -147,7 +147,7 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 }
 
 /* Funcion recursiva*/
-void graficarCuboRecursivo(double x, double y, double z, double tamanio, int n) {
+void graficarEsponjaMenger(double x, double y, double z, double tamanio, int n) {
 	if (n == 0) {//Caso base
 		graficarCubo(x, y, z, tamanio);//Graficar un cubo
 	}
@@ -164,7 +164,7 @@ void graficarCuboRecursivo(double x, double y, double z, double tamanio, int n) 
 						continue;//Omitir Agujeros y continuar
 					}
 					else {// Graficar cubos
-						graficarCuboRecursivo(
+						graficarEsponjaMenger(
 						x + i*tamanio,
 						y + j*tamanio,
 						z + k*tamanio,
@@ -192,7 +192,7 @@ void display() {
 	glRotatef(eje_X, 1.0f, 0.0f, 0.0f);
 	glRotatef(eje_Y, 0.0f, 1.0f, 0.0f);
 
-	graficarCuboRecursivo(x_i, y_i, z_i, tamanioCubo, n);
+	graficarEsponjaMenger(x_i, y_i, z_i, tamanioCubo, n);
 
 	glPopMatrix();
 	glFlush();
