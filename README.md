@@ -8,13 +8,7 @@ Al igual que la alfombra de Sierpinski constituye una generalización bidimensio
 
 Es de destacar su propiedad de curva universal, pues es un conjunto topológico de dimensión topológica uno, y cualquier otra curva o grafo es homeomorfo a un subconjunto de la esponja de Menger.
 
-Índice
 
-    1 Construcción
-    2 Véase también
-    3 Referencias
-        3.1 Bibliografía
-    4 Enlaces externos
 
 Construcción
 
@@ -26,3 +20,5 @@ La construcción de la esponja de Menger se define de forma recursiva:
     Repetimos los pasos 1, 2 y 3 para cada uno de los veinte cubos menores restantes.
 
 La esponja de Menger es el límite de este proceso tras un número infinito de iteraciones.
+
+Wikipedia
