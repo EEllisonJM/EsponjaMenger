@@ -141,7 +141,7 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 	glEnd();
 }
 
-/* Funcion recursiva*/
+/* Método recursivo para graficar la Esponja de Menger*/
 void graficarEsponjaMenger(double x, double y, double z, double tamanio, int n) {
 	if (n == 0) {//Caso base
 		graficarCubo(x, y, z, tamanio);//Graficar un cubo
