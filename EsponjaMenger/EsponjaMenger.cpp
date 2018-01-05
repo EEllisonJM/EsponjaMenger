@@ -185,7 +185,7 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(eye_x,eye_y, eye_z, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.0f);
+	gluLookAt(eye_x, eye_y, eye_z, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.0f);
 	glPushMatrix();
 	/*Rotar eje X & Y*/	
 	glRotatef(giro_eje_X, 1.0f, 0.0f, 0.0f);
