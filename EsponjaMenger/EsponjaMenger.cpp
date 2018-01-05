@@ -6,17 +6,22 @@
 double x_i = -1.5;
 double y_i = -1.5;
 double z_i = -1.5;
+
+float eye_x, eye_y= 0.0f;
+float eye_z = 10.0f;
+
 /*Tamanio*/
 double tamanioCubo = 3.5;
 int n = 0;
 
 bool clickMouseIzq = false;
 
-float eje_X = 0.0f;
-float eje_Y = 0.0f;
+float giro_eje_X = 0.0f;
+float giro_eje_Y = 0.0f;
 
 float aux_x = 0.0f;
 float aux_y = 0.0f;
+
 /*Texturas*/
 GLuint _text1;
 GLuint _text2;
@@ -143,9 +148,8 @@ void graficarCubo(double x, double y, double z, double tamanio) {
 
 /* Método recursivo para graficar la Esponja de Menger*/
 void graficarEsponjaMenger(double x, double y, double z, double tamanio, int n) {
-	if (n == 0) {//Caso base
-		graficarCubo(x, y, z, tamanio);//Graficar un cubo
-	}
+	if (n == 0)//Caso base
+		graficarCubo(x, y, z, tamanio);//Graficar un cubo	
 	else {
 		tamanio = tamanio / 3;
 		for (int i = 0; i<3; i++) {
@@ -181,11 +185,12 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(eye_x,eye_y, eye_z, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.0f);
 	glPushMatrix();
 	/*Rotar eje X & Y*/	
-	glRotatef(eje_X, 1.0f, 0.0f, 0.0f);
-	glRotatef(eje_Y, 0.0f, 1.0f, 0.0f);
+	glRotatef(giro_eje_X, 1.0f, 0.0f, 0.0f);
+	glRotatef(giro_eje_Y, 0.0f, 1.0f, 0.0f);
+	//glRotatef(giro_eje_Z, 0.0f, 0.0f, 1.0f);
 
 	graficarEsponjaMenger(x_i, y_i, z_i, tamanioCubo, n);
 
@@ -193,7 +198,7 @@ void display() {
 	glFlush();
 	glutSwapBuffers();
 }
-
+/*Remodelar*/
 void reshape(int w, int h) {//Tamanio
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -205,10 +210,10 @@ void reshape(int w, int h) {//Tamanio
 void ArrowKey(int key, int x, int y) {
 	switch (key)
 	{
-	case GLUT_KEY_UP:
+	case GLUT_KEY_UP:/*Aumentar iteracion*/
 		n += 1;
 		break;
-	case GLUT_KEY_DOWN://Abajo
+	case GLUT_KEY_DOWN:/*Disminuir iteracion*/
 		if (n - 1 > -1)
 			n -= 1;
 		break;
@@ -218,26 +223,35 @@ void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 27:
 		exit(1); break;
+	case 'w':
+		eye_z -= .2;
+		break;
+	case 's':
+		eye_z += .2;
+		break;
+	case 'W':
+		eye_z -= .2;
+		break;
+	case 'S':
+		eye_z += .2;
+		break;
 	}
 }
 
-void mouse(int button, int state, int x, int y) {
-	//Tecla izquierda Presionada
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+void mouse(int button, int state, int x, int y) {	
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {/*Tecla izquierda Presionada[mouse]*/
 		clickMouseIzq = true;
-		//Objtener coordenadas
-		aux_x = x - eje_Y;
-		aux_y = -y + eje_X;
+		aux_x = x - giro_eje_Y;
+		aux_y = -y + giro_eje_X;
 	}
 	else
 		clickMouseIzq = false;
 }
-
+/*Movimiento del Mouse*/
 void mouseMotion(int x, int y) {
 	if (clickMouseIzq) {
-		//Girar
-		eje_Y = x - aux_x;
-		eje_X = y + aux_y;
+		giro_eje_Y = x - aux_x;
+		giro_eje_X = y + aux_y;
 		glutPostRedisplay();
 	}
 }
@@ -256,7 +270,7 @@ int main(int argc, char *argv[]) {
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
-	glutMouseFunc(mouse);
+	glutMouseFunc(mouse);/*sets the mouse callback for the current window*/
 	glutMotionFunc(mouseMotion);
 	glutIdleFunc(display);
 	glutReshapeFunc(reshape);
