@@ -185,9 +185,9 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(eye_x, eye_y, eye_z, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.0f);
+	gluLookAt(eye_x, eye_y, eye_z, 0.0f, 0.0f, 0.0f, 0.0f, 0.01f, 0.0f);
 	glPushMatrix();
-	/*Rotar eje X & Y*/	
+	
 	glRotatef(giro_eje_X, 1.0f, 0.0f, 0.0f);
 	glRotatef(giro_eje_Y, 0.0f, 1.0f, 0.0f);
 	//glRotatef(giro_eje_Z, 0.0f, 0.0f, 1.0f);
@@ -261,7 +261,7 @@ int main(int argc, char *argv[]) {
 
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(50, 50);
-	glutInitWindowSize(550, 550);
+	glutInitWindowSize(650, 550);
 	glutCreateWindow("Esponja de Menger");
 	glEnable(GL_DEPTH_TEST);
 	initRendering();
